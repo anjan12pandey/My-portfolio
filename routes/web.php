@@ -32,6 +32,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('experiences', App\Http\Controllers\Admin\ExperienceController::class);
 });
 
+
+
 // Alias for Breeze authentication redirects and Ziggy
 Route::redirect('/dashboard', '/admin/dashboard')->name('dashboard');
 
