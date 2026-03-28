@@ -34,6 +34,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
 
 
+
 // Alias for Breeze authentication redirects and Ziggy
 Route::redirect('/dashboard', '/admin/dashboard')->name('dashboard');
 
