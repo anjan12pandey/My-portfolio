@@ -10,33 +10,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to EC2 via SSH
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: 3.27.92.92
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          debug: true
           script: |
-            cd /var/www/My-portfolio
+            echo "✅ SSH Connected"
+
+            whoami
+            pwd
+
+            cd /var/www/My-portfolio || exit
 
             echo "🚀 Deploy started"
 
             git fetch origin
             git reset --hard origin/main
 
-            echo "📦 Installing PHP deps"
             composer install --no-dev --optimize-autoloader
 
-            echo "📦 Installing Node deps"
             npm install
-
-            echo "🏗 Building frontend"
             npm run build
 
-            echo "🗄 Running migrations"
             php artisan migrate --force
 
-            echo "⚡ Caching"
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
